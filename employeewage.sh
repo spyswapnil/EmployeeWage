@@ -5,7 +5,7 @@ totalhoursinmonth=0
 totaldaysinmonth=0
 totalwage=0
 index=0
-
+declare -A details
 function getworkinghours(){
 	case $1 in
 			0)
@@ -20,7 +20,7 @@ function getworkinghours(){
 	esac
 	echo "$totalhoursperday"
 }
-while [ $totalhoursinmonth -le 100 ] && [ $totaldaysinmonth -le 20 ]
+while [ $totalhoursinmonth -le 99 ] && [ $totaldaysinmonth -le 19 ]
 do
 	((totaldaysinmonth++))
 	totalhoursperdays=$( getworkinghours $(( RANDOM%3 )) )
@@ -28,6 +28,9 @@ do
 	dailywage=$(( wageperhour*totalhoursperdays ))
 	wages[((index++))]=$dailywage
 	totalwage=$(( totalwage+dailywage ))
+	details[Day $totaldaysinmonth]=$dailywage
 done
 echo "Total Wage:$totalwage"
 echo ${wages[@]}
+echo "Keys: ${!details[@]}"
+echo "Values: ${details[@]}"
